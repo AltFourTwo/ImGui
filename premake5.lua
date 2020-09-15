@@ -2,9 +2,10 @@
 project "ImGui"
     kind "StaticLib"
     language "C++"
-    staticruntime "Off"
+    cppdialect "C++17"
+    staticruntime "on"
 
-	targetdir ( CommonTargetDir .. "%{prj.name}" )
+    targetdir ( CommonTargetDir .. "%{prj.name}" )
     objdir ( CommonObjDir .. "%{prj.name}" )
     
     files 
@@ -22,8 +23,12 @@ project "ImGui"
     }
 
     filter "system:windows"
-        cppdialect "C++17"
         systemversion "latest"
 
-    filter { "system:windows", "configurations:Release" }
+    filter "configurations:Debug"
+        runtime "Debug"
+        symbols "on"
+
+    filter "configurations:Release"
         runtime "Release"
+        optimize "on"
